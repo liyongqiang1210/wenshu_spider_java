@@ -1,7 +1,5 @@
 package com.spider.utils;
 
-import java.util.EnumSet;
-
 public class KeyWordEnumUtil {
 
 	public static enum CaseTypeEnum {

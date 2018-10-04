@@ -1,32 +1,18 @@
 package com.spider.utils;
 
+import java.util.EnumSet;
+
 public class KeyWordEnumUtil {
 
-	public enum CaseTypeEnum {
-		CAIVILCASE {
-			public String[] getName() {
-				return null;
-			}
-		},
-		CRIMINALCASE {
-			public String[] getName() {
-				return null;
-			}
-		},
-		ADMINISTRATIVECASE {
-			public String[] getName() {
-				return null;
-			}
-		},
-		COMPENSATECASE {
-			public String[] getName() {
-				return null;
-			}
-		},
-		IMPLEMENTCASE {
-			public String[] getName() {
-				return null;
-			}
-		};
+	public static enum CaseTypeEnum {
+		CAIVILCASE,
+		CRIMINALCASE,
+		ADMINISTRATIVECASE,
+		COMPENSATECASE,
+		IMPLEMENTCASE
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 }

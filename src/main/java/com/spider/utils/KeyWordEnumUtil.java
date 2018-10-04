@@ -10,7 +10,4 @@ public class KeyWordEnumUtil {
 		IMPLEMENTCASE
 	}
 	
-	public static void main(String[] args) {
-		
-	}
 }

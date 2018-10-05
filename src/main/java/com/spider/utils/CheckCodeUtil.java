@@ -1,22 +1,11 @@
 package com.spider.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.utils.HttpClientUtils;
 import org.json.JSONObject;
-import org.openqa.selenium.remote.http.HttpRequest;
 
-import com.alibaba.fastjson.util.IOUtils;
 import com.baidu.aip.ocr.AipOcr;
-import com.gargoylesoftware.htmlunit.javascript.host.Map;
 
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;

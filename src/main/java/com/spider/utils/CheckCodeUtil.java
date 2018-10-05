@@ -16,6 +16,7 @@ import org.openqa.selenium.remote.http.HttpRequest;
 
 import com.alibaba.fastjson.util.IOUtils;
 import com.baidu.aip.ocr.AipOcr;
+import com.gargoylesoftware.htmlunit.javascript.host.Map;
 
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
@@ -69,12 +70,12 @@ public class CheckCodeUtil {
 	 * @return
 	 */
 	public static String getCheckCodeByBaidu(String filePath) {
+
 		AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
 		// 调用接口
 		JSONObject res = client.basicGeneral(filePath, new HashMap<String, String>());
-		Object object = res.get("words_result");
-		String string = object.toString();
-		return string;
+		String code = res.toString(2);
+		return code;
 	}
 
 	public static void main(String[] args) {

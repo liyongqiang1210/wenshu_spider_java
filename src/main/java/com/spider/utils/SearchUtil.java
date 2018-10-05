@@ -1,12 +1,17 @@
 package com.spider.utils;
 
 /**
- * @RetrievalConditionUtil.java
- *
- * @author Li Yongqiang
- * @datetime 2018年10月4日 下午7:47:20
+ * <p>
+ * Title: RetrievalConditionUtil
+ * </p>
+ * <p>
+ * Description: 文书网检索工具类
+ * </p>
+ * 
+ * @author liyongqiang
+ * @datetime 2018年10月5日 上午8:24:56
  */
-public class RetrievalConditionUtil {
+public class SearchUtil {
 
 	/**
 	 * 民事案例检索关键字

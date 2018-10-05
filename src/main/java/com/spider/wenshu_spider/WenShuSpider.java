@@ -1,7 +1,10 @@
 package com.spider.wenshu_spider;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -58,8 +61,14 @@ public class WenShuSpider implements Executor {
 	private WebDriver openDriver(CrawlDatum datum) {
 		// 设置代理IP
 		ChromeOptions options = new ChromeOptions();
-		// Proxy proxy = new Proxy();
-		// proxy.setHttpProxy("61.135.217.7:80222");
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("profile.managed_default_content_settings.images", 2);
+		prefs.put("profile.managed_default_content_settings.javascript", 2);
+		options.setExperimentalOption("prefs", prefs);
+		options.addArguments("disable-infobars");
+		// 设置代理ip
+		String ip = "119.90.126.106:7777";
+		options.addArguments("--proxy-server=http://" + ip);
 		// 创建chrome浏览器驱动
 		WebDriver driver = new ChromeDriver(options);
 		// 最大化浏览器窗口否则会造成找不到下一页按钮的bug
@@ -126,11 +135,11 @@ public class WenShuSpider implements Executor {
 
 		// 遍历案例列表
 		for (WebElement caseData : caseDataList) {
+
 			caseData.click();// 点击案例链接
 
 			// 获取初始页面句柄
 			String handle = driver.getWindowHandle();
-
 			// 获取所有页面的句柄，并循环判断不是初始的句柄
 			for (String handles : driver.getWindowHandles()) {
 				if (handles.equals(handle)) { // 如果是初始页面则进入下一个循环
@@ -138,11 +147,9 @@ public class WenShuSpider implements Executor {
 				}
 				driver.switchTo().window(handles); // 切换到新的页面
 			}
-
 			// 获取我们要的内容
 			WebElement caseDetailed = driver.findElement(By.className("div_doc_container"));
 			System.out.println(caseDetailed.getText());
-
 			// 获取所有页面的句柄，并循环判断不是初始页面的句柄
 			for (String handles : driver.getWindowHandles()) {
 				if (!handles.equals(handle)) { // 如果不是初始页面则关闭
@@ -150,6 +157,7 @@ public class WenShuSpider implements Executor {
 					driver.switchTo().window(handle);// 切换到初始页面
 				}
 			}
+
 		}
 	}
 
@@ -160,31 +168,33 @@ public class WenShuSpider implements Executor {
 	 * @param endDate
 	 * @return
 	 */
-	public List<String> getUrlList(String startDate, String endDate) {
-		
-		List<String> days = DateUtil.getDays(startDate, endDate);
+	public static List<String> getUrlList(String startDate, String endDate) {
+		String url = "";
+		List<String> urls = new ArrayList<String>(); // url集合
+		List<String> days = DateUtil.getDays(startDate, endDate); // 日期集合
+		for (String day : days) {
+			url = "http://wenshu.court.gov.cn/list/list/?sorttype=1&number=7F3763NB"
+					+ "&guid=f867a49e-3368-a21eab6b-07aa15204911"
+					+ "&conditions=searchWord+1++%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6+%E6%A1%88%E4%BB%B6%E7%B1%BB%E5%9E%8B:%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6"
+					+ "&conditions=searchWord++CPRQ++%E8%A3%81%E5%88%A4%E6%97%A5%E6%9C%9F:" + day + "%20TO%20" + day
+					+ "";
+			urls.add(url);
+		}
 		return null;
 	}
 
 	public static void main(String[] args) throws Exception {
-		List<String> days = DateUtil.getDays("2015-01-01", "2015-01-05");
-		for (String day : days) {
-			WenShuSpider wss = new WenShuSpider();
-			// 创建一个基于伯克利DB的DBManager
-			DBManager manager = new BerkeleyDBManager("crawl");
-			// 创建一个Crawler需要有DBManager和Executor
-			Crawler crawler = new Crawler(manager, wss);
-			// 添加要爬取的url
-			crawler.addSeed("http://wenshu.court.gov.cn/list/list/?sorttype=1&number=7F3763NB"
-					+ "&guid=f867a49e-3368-a21eab6b-07aa15204911"
-					+ "&conditions=searchWord+1++%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6+%E6%A1%88%E4%BB%B6%E7%B1%BB%E5%9E%8B:%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6"
-					+ "&conditions=searchWord++CPRQ++%E8%A3%81%E5%88%A4%E6%97%A5%E6%9C%9F:" + day + "%20TO%20" + day
-					+ "");
-			// 设置线程数
-			crawler.setThreads(1);
-			// 设置迭代次数
-			crawler.start(1);
-		}
+		WenShuSpider wss = new WenShuSpider();
+		// 创建一个基于伯克利DB的DBManager
+		DBManager manager = new BerkeleyDBManager("crawl");
+		// 创建一个Crawler需要有DBManager和Executor
+		Crawler crawler = new Crawler(manager, wss);
+		// 添加要爬取的url
+		crawler.addSeed("https://www.csdn.net/");
+		// 设置线程数
+		crawler.setThreads(1);
+		// 设置迭代次数
+		crawler.start(1);
 	}
 
 }

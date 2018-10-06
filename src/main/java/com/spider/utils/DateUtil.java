@@ -22,6 +22,19 @@ import java.util.List;
 public class DateUtil {
 
 	/**
+	 * 获取指定格式的当前时间
+	 * 
+	 * @param format
+	 * @return
+	 */
+	public static String getDateTime(String format) {
+		DateFormat dateFormat = new SimpleDateFormat(format);
+		Date date = new Date();
+		String dataTime = dateFormat.format(date);
+		return dataTime;
+	}
+
+	/**
 	 * 获取两个日期之间的所有日期
 	 * 
 	 * @param startDate
@@ -62,5 +75,6 @@ public class DateUtil {
 
 		List<String> days = DateUtil.getDays("2016-01-01", "2017-01-01");
 		System.out.println(days);
+		System.out.println(getDateTime("yyyy-MM-dd"));
 	}
 }

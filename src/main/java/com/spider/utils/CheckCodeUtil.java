@@ -2,11 +2,8 @@ package com.spider.utils;
 
 import java.io.File;
 import java.util.HashMap;
-
 import org.json.JSONObject;
-
 import com.baidu.aip.ocr.AipOcr;
-
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -25,7 +22,7 @@ import net.sourceforge.tess4j.util.LoadLibs;
  */
 public class CheckCodeUtil {
 
-	// 设置APPID/AK/SK
+	// 设置百度APPID/AK/SK
 	public static final String APP_ID = "14352214";
 	public static final String API_KEY = "bjuO72pRoTXTzyFK5bMEwWyk";
 	public static final String SECRET_KEY = "P8r8H6ZufQoVwGfnKdYk7zc8Y1ZfZ2zX";
@@ -63,7 +60,10 @@ public class CheckCodeUtil {
 		AipOcr client = new AipOcr(APP_ID, API_KEY, SECRET_KEY);
 		// 调用接口
 		JSONObject res = client.basicGeneral(filePath, new HashMap<String, String>());
-		String code = res.toString(2);
+		// 获取识别出来的验证码
+		String words = res.get("words_result").toString();
+		String code = words.substring(words.indexOf(":\"") + 2, words.length()-3);
+		
 		return code;
 	}
 

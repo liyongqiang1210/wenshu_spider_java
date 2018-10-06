@@ -57,7 +57,7 @@ public class MiPuJDBC {
 	public static int insertIP(IP ip) {
 		Connection conn = getConn();
 		int i = 0;
-		String sql = "insert into ip_list (ip_address, ip_port, ip_type, ip_location, ip_verify_time, ip_create_time) values(?,?,?,?,?)";
+		String sql = "insert into ip_list (ip_address, ip_port, ip_type, ip_location, ip_verify_time, ip_create_time) values(?,?,?,?,?,?)";
 		PreparedStatement ps; // 获取预编译对象
 		try {
 			ps = conn.prepareStatement(sql);

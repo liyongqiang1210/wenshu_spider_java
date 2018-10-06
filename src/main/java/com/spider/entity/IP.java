@@ -74,4 +74,17 @@ public class IP {
 				+ ", ipLocation=" + ipLocation + ", ipVerifyTime=" + ipVerifyTime + "]";
 	}
 
+	public IP(String ipAddress, String ipPort, String ipType, String ipLocation, String ipVerifyTime) {
+		super();
+		this.ipAddress = ipAddress;
+		this.ipPort = ipPort;
+		this.ipType = ipType;
+		this.ipLocation = ipLocation;
+		this.ipVerifyTime = ipVerifyTime;
+	}
+
+	public IP() {
+		super();
+	}
+
 }

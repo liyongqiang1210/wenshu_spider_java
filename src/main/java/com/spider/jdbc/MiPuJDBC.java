@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.mysql.jdbc.Connection;
 import com.spider.entity.IP;
+import com.spider.utils.DateUtil;
 
 /**
  * <p>
@@ -24,7 +25,7 @@ import com.spider.entity.IP;
 public class MiPuJDBC {
 
 	// 数据库属性配置
-	private static final String JDBC_DRIVER = "com.mysql.jdbc.driver";
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	private static final String DB_URL = "jdbc:mysql://localhost/lyq_db";
 	private static final String USER = "root";
 	private static final String PWD = "root";
@@ -56,7 +57,7 @@ public class MiPuJDBC {
 	public static int insertIP(IP ip) {
 		Connection conn = getConn();
 		int i = 0;
-		String sql = "insert into ip_list (ip_address, ip_port, ip_type, ip_location, ip_verify_time) values(?,?,?,?,?)";
+		String sql = "insert into ip_list (ip_address, ip_port, ip_type, ip_location, ip_verify_time, ip_create_time) values(?,?,?,?,?)";
 		PreparedStatement ps; // 获取预编译对象
 		try {
 			ps = conn.prepareStatement(sql);
@@ -65,6 +66,7 @@ public class MiPuJDBC {
 			ps.setString(3, ip.getIpType());
 			ps.setString(4, ip.getIpLocation());
 			ps.setString(5, ip.getIpVerifyTime());
+			ps.setString(6, DateUtil.getDateTime("yyyy-MM-dd"));
 			i = ps.executeUpdate();
 			ps.close();
 			conn.close();
